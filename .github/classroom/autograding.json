@@ -1,0 +1,34 @@
+{
+  "tests": [
+    {
+      "name": "Integrida archivos de prueba",
+      "setup": "",
+      "run": "cat .tests/globals .tests/test_output.sh Testfile | sha256sum",
+      "input": "",
+      "output": "a5c9ce7468a06ea6a2889d78bbf6bd3ef5f89e98affe7973b1c1878353d4a6f2",
+      "comparison": "included",
+      "timeout": 2,
+      "points": null
+    },
+    {
+      "name": "Archivo invalido",
+      "setup": "",
+      "run": "make -f Testfile invalido",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 2,
+      "points": 1
+    },
+    {
+      "name": "Archivo normal",
+      "setup": "",
+      "run": "make -f Testfile normal",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 2,
+      "points": 2
+    }
+  ]
+}
