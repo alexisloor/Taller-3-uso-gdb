@@ -5,6 +5,7 @@
 #include <errno.h>
 #include <string.h>
 
+
 typedef struct nodo {
 	short mes;
 	short dia;
