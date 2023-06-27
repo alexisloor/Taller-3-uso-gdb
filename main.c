@@ -18,15 +18,13 @@ typedef struct nodo {
 bool cflag = false; //Opción -c, ignora la línea de cabecera
 
 void recorrer_lista(nodo_t *cabecera);
-void push(nodo_t **cabecera, nodo_t nuevo_nodo);
 
 int main (int argc, char *argv[])
 {
 	int opt, index;
 	char *nombre_archivo = NULL;
 	FILE *fp;
-	nodo_t *cabecera;
-	nodo_t *nodo_actual;
+	nodo_t *cabecera, *nodo_actual, *nodo_anterior = NULL;
 
 	while ((opt = getopt (argc, argv, "ch")) != -1){
 		switch(opt)
@@ -70,7 +68,7 @@ int main (int argc, char *argv[])
 
 	/* Valida si pudo abrir el archivo, usa errno para mostrar el error */
 	if(fp == NULL){
-		fprintf(stderr, "Error al abir %s: %s\n", nombre_archivo, strerror(errno));
+		fprintf(stderr, "Error al leer %s\n", nombre_archivo);
 		return 1;
 	}
 
@@ -90,20 +88,18 @@ int main (int argc, char *argv[])
 			nodo_actual->dia = dia;
 			nodo_actual->hora = hora;
 			nodo_actual->temperatura = temperatura;
-			push(&cabecera, *nodo_actual);
-		}
+			nodo_actual->siguiente = nodo_anterior;
+      cabecera = nodo_actual;
+      nodo_anterior = nodo_actual;
+    } else {
+      fprintf(stderr, "Error al leer %s\n", nombre_archivo);
+    }
 
 	}while(n > 0);
 
 	recorrer_lista(cabecera);
 }
 
-/* Inserta el nodo al inicio de la lista enlazada */
-void push(nodo_t **cabecera, nodo_t nuevo_nodo)
-{
-	nuevo_nodo.siguiente = *cabecera;
-	*cabecera = &nuevo_nodo;
-}
 
 void recorrer_lista(nodo_t *cabecera)
 {
